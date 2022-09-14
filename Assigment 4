@@ -1,0 +1,25 @@
+clc;
+clear;
+syms s;
+
+T = 1;
+t = 0:0.1:15;
+u = sin(2*pi*0.2*t);
+Kp = 1;
+Ki = 1;
+% Ki = 3;
+% Ki = 5;
+% Ki = 7;
+% Ki = 9;
+
+num = [T];
+den = [T T/16 1];
+sys = tf(num,den)
+
+C = tf([Kp Ki],[1 0]);
+complete = feedback(sys*C,1);
+subplot(311), step(complete);
+subplot(312), impulse(complete);
+subplot(313), lsim(complete,u,t);
+
+stepinfo(complete)
